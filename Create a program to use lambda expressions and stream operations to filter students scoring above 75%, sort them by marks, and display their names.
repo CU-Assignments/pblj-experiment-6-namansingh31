@@ -1,0 +1,46 @@
+import java.util.*;
+import java.util.stream.Collectors;
+
+class Student {
+    String name;
+    double marks;
+
+    public Student(String name, double marks) {
+        this.name = name;
+        this.marks = marks;
+    }
+
+    @Override
+    public String toString() {
+        return name + " - " + marks;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        List<Student> students = new ArrayList<>();
+        students.add(new Student("John", 85));
+        students.add(new Student("Alice", 72));
+        students.add(new Student("Bob", 90));
+        students.add(new Student("David", 75));
+        students.add(new Student("Eve", 60));
+        students.add(new Student("Aakash", 88));
+        students.add(new Student("Aditya", 76));
+        students.add(new Student("Nikhil", 92));
+        students.add(new Student("Naman", 74));
+        students.add(new Student("Roman", 80));
+
+        // Stream operations: filtering, mapping, sorting, and using peek for debugging
+        List<String> topStudents = students.stream()
+                .filter(student -> student.marks >= 75) // Filtering students with marks >= 75
+                .peek(student -> System.out.println("Filtered: " + student)) // Debugging with peek
+                .sorted(Comparator.comparingDouble(student -> -student.marks)) // Sorting in descending order
+                .peek(student -> System.out.println("Sorted: " + student)) // Debugging with peek
+                .map(student -> student.name) // Mapping to names
+                .peek(name -> System.out.println("Mapped: " + name)) // Debugging with peek
+                .collect(Collectors.toList());
+
+        System.out.println("Students scoring 75% and above, sorted by marks:");
+        topStudents.forEach(System.out::println);
+    }
+}
